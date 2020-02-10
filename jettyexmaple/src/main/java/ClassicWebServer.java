@@ -6,18 +6,17 @@ import java.net.Socket;
 import java.util.StringTokenizer;
 import java.util.concurrent.Executors;
 
-public class WebServer {
+public class ClassicWebServer {
 
-    public WebServer() {
+    public ClassicWebServer() {
+        var executor = Executors.newCachedThreadPool(Thread.builder().factory());
         System.out.println("Webserver Started");
-        var executor = Executors.newCachedThreadPool(Thread.builder().virtual().virtual().factory());
         try (ServerSocket serverSocket = new ServerSocket(80)) {
             while (true) {
 //                System.out.println("Waiting for client request");
                 Socket remote = serverSocket.accept();
 //                System.out.println("Connection made");
                 executor.submit(new ClientHandler(remote));
-//                new Thread(new ClientHandler(remote)).start();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -25,7 +24,7 @@ public class WebServer {
     }
 
     public static void main(String args[]) {
-        new WebServer();
+        new ClassicWebServer();
     }
 
     public static class ClientHandler implements Runnable {

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  loom-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java --enable-preview --source 15 main/java/WebServer.java"
+    ports:
+    - 7070:80
+
+  normal-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "java --enable-preview --source 15 main/java/ClassicWebServer.java"
+    ports:
+    - 7171:80
+
+  load-test-runner:
+    image: ubuntu
+    command: "sleep 100000"
+
